@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Flow - Your Study Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>Life Flow</h1>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <a href="profile.html" class="profile-btn">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="home-main">
+        <div class="journey-container">
+            <!-- Journey Visualization -->
+            <div class="journey-visual">
+                <div class="seed-step active" data-step="1">
+                    <div class="step-icon"><i class="fas fa-seedling"></i></div>
+                    <p class="step-label">Seed</p>
+                    <div class="step-progress" id="seedProgress">0%</div>
+                </div>
+                
+                <div class="seed-step" data-step="2">
+                    <div class="step-icon"><i class="fas fa-leaf"></i></div>
+                    <p class="step-label">Sprout</p>
+                    <div class="step-progress" id="sproutProgress">0%</div>
+                </div>
+                
+                <div class="seed-step" data-step="3">
+                    <div class="step-icon"><i class="fas fa-spa"></i></div>
+                    <p class="step-label">Plant</p>
+                    <div class="step-progress" id="plantProgress">0%</div>
+                </div>
+                
+                <div class="seed-step" data-step="4">
+                    <div class="step-icon"><i class="fas fa-tree"></i></div>
+                    <p class="step-label">Tree</p>
+                    <div class="step-progress" id="treeProgress">0%</div>
+                </div>
+            </div>
+
+            <!-- Level Display -->
+            <div class="level-display">
+                <h2>Current Level: <span id="currentLevel">Seed</span></h2>
+                <div class="level-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="levelProgressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="level-stats">
+                        <span id="currentXP">0</span>
+                        <span>/</span>
+                        <span id="requiredXP">100</span>
+                        <span>XP</span>
+                    </div>
+                </div>
+                <p class="level-hint" id="levelHint">Complete 5 study sessions to unlock Sprout level</p>
+            </div>
+
+            <!-- Study Timer -->
+            <div class="study-timer-section">
+                <h2><i class="fas fa-clock"></i> Study Timer</h2>
+                
+                <div class="timer-display" id="timerDisplay">
+                    <span id="timerHours">00</span>:<span id="timerMinutes">00</span>:<span id="timerSeconds">00</span>
+                </div>
+                
+                <div class="timer-controls">
+                    <button class="timer-btn start-btn" id="startTimerBtn">
+                        <i class="fas fa-play"></i> Start
+                    </button>
+                    <button class="timer-btn pause-btn" id="pauseTimerBtn" disabled>
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button class="timer-btn stop-btn" id="stopTimerBtn" disabled>
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                    <button class="timer-btn reset-btn" id="resetTimerBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="timer-stats">
+                    <div class="stat">
+                        <span class="stat-label">Today's Study</span>
+                        <span class="stat-value" id="todayStudyTime">0h 0m</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Session</span>
+                        <span class="stat-value" id="sessionStudyTime">0m</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Total Study</span>
+                        <span class="stat-value" id="totalStudyTimeHome">0h 0m</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Action -->
+            <div class="study-action">
+                <a href="study-hub.html" class="ios-btn">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Enter Study Hub</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <i class="fas fa-folder"></i>
+                <h3 id="folderCount">0</h3>
+                <p>Folders</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-video"></i>
+                <h3 id="videoCount">0</h3>
+                <p>Videos</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-pdf"></i>
+                <h3 id="noteCount">0</h3>
+                <p>Notes</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-brain"></i>
+                <h3 id="xpCount">0</h3>
+                <p>XP Points</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+            <div class="activity-list" id="recentActivityList">
+                <div class="empty-activity">
+                    <i class="fas fa-calendar-plus"></i>
+                    <p>Start studying to see your activities here!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="study-hub.html" class="nav-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Study Hub</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="theme.js"></script>
+    <script src="main.js"></script>
+    
+</body>
+</html>

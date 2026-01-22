@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Life Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="logo">
+                <i class="fas fa-user-circle"></i>
+                <h1>My Profile</h1>
+            </div>
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="profile-main">
+        <!-- User Info -->
+        <div class="user-info-card">
+            <div class="user-avatar">
+                <div class="avatar-circle" id="userAvatar">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="avatar-level" id="avatarLevel">Seed</div>
+            </div>
+            <div class="user-details">
+                <h2 id="userName">Study Learner</h2>
+                <p class="user-email" id="userEmail">student@lifeflow.com</p>
+                
+                <div class="xp-display">
+                    <div class="xp-info">
+                        <span class="xp-label">XP Points</span>
+                        <span class="xp-value" id="userXP">0</span>
+                    </div>
+                    <div class="level-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="userLevelProgress" style="width: 0%;"></div>
+                        </div>
+                        <span class="level-text" id="levelText">0% to next level</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storage Section -->
+        <div class="storage-section">
+            <h3><i class="fas fa-database"></i> Storage Management</h3>
+            
+            <div class="storage-overview">
+                <div class="storage-total">
+                    <div class="storage-icon">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <div class="storage-details">
+                        <h4>Total Storage</h4>
+                        <p class="storage-size" id="totalStorage">100 GB</p>
+                    </div>
+                </div>
+                
+                <div class="storage-progress">
+                    <div class="storage-bar">
+                        <div class="storage-fill" id="storageUsedFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="storage-labels">
+                        <span>Used: <strong id="storageUsed">0 MB</strong></span>
+                        <span>Free: <strong id="storageFree">100 GB</strong></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="storage-breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-icon videos">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="breakdown-info">
+                        <span class="breakdown-label">Videos</span>
+                        <span class="breakdown-size" id="videoStorage">0 MB</span>
+                    </div>
+                    <div class="breakdown-percent" id="videoPercent">0%</div>
+                </div>
+                
+                <div class="breakdown-item">
+                    <div class="breakdown-icon pdfs">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="breakdown-info">
+                        <span class="breakdown-label">PDF Notes</span>
+                        <span class="breakdown-size" id="pdfStorage">0 MB</span>
+                    </div>
+                    <div class="breakdown-percent" id="pdfPercent">0%</div>
+                </div>
+                
+                <div class="breakdown-item">
+                    <div class="breakdown-icon app">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="breakdown-info">
+                        <span class="breakdown-label">App Data</span>
+                        <span class="breakdown-size" id="appStorage">0 MB</span>
+                    </div>
+                    <div class="breakdown-percent" id="appPercent">0%</div>
+                </div>
+            </div>
+            
+            <button class="btn-secondary" id="clearCacheBtn">
+                <i class="fas fa-broom"></i> Clear Cache
+            </button>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h3><i class="fas fa-chart-line"></i> Study Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon total-study">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Study Time</h4>
+                        <p class="stat-value" id="totalStudyTime">0h 0m</p>
+                        <p class="stat-change" id="todayStudyChange">Today: 0m</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon folders-created">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Folders Created</h4>
+                        <p class="stat-value" id="totalFolders">0</p>
+                        <p class="stat-change" id="activeFolders">Active: 0</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon videos-uploaded">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Videos Uploaded</h4>
+                        <p class="stat-value" id="totalVideos">0</p>
+                        <p class="stat-change" id="totalVideoSize">Size: 0 MB</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon notes-created">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>PDF Notes</h4>
+                        <p class="stat-value" id="totalNotes">0</p>
+                        <p class="stat-change" id="totalNoteSize">Size: 0 MB</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-section">
+            <div class="activity-header">
+                <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                <button class="btn-text" id="clearActivityBtn">Clear All</button>
+            </div>
+            <div class="activity-list" id="activityList">
+                <!-- Activities will be loaded here -->
+                <div class="empty-activity">
+                    <i class="fas fa-calendar-plus"></i>
+                    <p>No activities yet. Start studying!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Goals -->
+        <div class="goals-section">
+            <h3><i class="fas fa-bullseye"></i> Study Goals</h3>
+            <div class="goals-list" id="goalsList">
+                <!-- Goals will be loaded dynamically -->
+                <div class="empty-goals">
+                    <i class="fas fa-bullseye"></i>
+                    <p>Start studying to see your personalized goals!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-content settings-content">
+                <h2>Settings</h2>
+                
+                <div class="settings-group">
+                    <h4><i class="fas fa-palette"></i> Appearance</h4>
+                    <div class="settings-option">
+                        <span>Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="settings-option">
+                        <span>Auto-play Videos</span>
+                        <label class="switch">
+                            <input type="checkbox" id="autoPlayToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="settings-option">
+                        <span>Study Reminders</span>
+                        <label class="switch">
+                            <input type="checkbox" id="remindersToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h4><i class="fas fa-download"></i> Downloads</h4>
+                    <div class="settings-option">
+                        <span>Video Quality</span>
+                        <select id="videoQuality">
+                            <option value="auto">Auto (Recommended)</option>
+                            <option value="720">720p</option>
+                            <option value="480">480p</option>
+                            <option value="360">360p</option>
+                        </select>
+                    </div>
+                    
+                    <div class="settings-option">
+                        <span>Download Location</span>
+                        <select id="downloadLocation">
+                            <option value="device">Device Storage</option>
+                            <option value="app">App Storage</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-group">
+                    <h4><i class="fas fa-shield-alt"></i> Privacy & Data</h4>
+                    <div class="settings-option">
+                        <span>Auto-delete Cache</span>
+                        <select id="cacheAutoDelete">
+                            <option value="7">After 7 days</option>
+                            <option value="30" selected>After 30 days</option>
+                            <option value="never">Never</option>
+                        </select>
+                    </div>
+                    
+                    <div class="settings-option">
+                        <span>Export Study Data</span>
+                        <button class="btn-text" id="exportDataBtn">Export</button>
+                    </div>
+                    
+                    <div class="settings-option danger">
+                        <span>Delete All Data</span>
+                        <button class="btn-danger" id="deleteAllDataBtn">Delete</button>
+                    </div>
+                </div>
+                
+                <div class="settings-actions">
+                    <button class="btn-secondary" id="closeSettingsBtn">Close</button>
+                    <button class="btn-primary" id="saveSettingsBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Edit Modal -->
+        <div class="modal" id="profileEditModal" style="display: none;">
+            <div class="modal-content">
+                <h2>Edit Profile</h2>
+                <button class="close-btn" id="closeProfileEditBtn">&times;</button>
+                
+                <div class="avatar-edit">
+                    <div class="avatar-preview" id="avatarPreview">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input type="file" id="avatarUpload" accept="image/*" hidden>
+                    <button class="btn-secondary" id="changeAvatarBtn">
+                        <i class="fas fa-camera"></i> Change Photo
+                    </button>
+                    <button class="btn-text" id="removeAvatarBtn">
+                        <i class="fas fa-trash"></i> Remove Photo
+                    </button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input type="text" id="nameInput" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" id="emailInput" placeholder="your@email.com">
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelProfileEdit">Cancel</button>
+                    <button class="btn-primary" id="saveProfileChanges">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="study-hub.html" class="nav-item">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Study Hub</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="theme.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

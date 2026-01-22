@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Hub - Life Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="study-hub.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>Study Hub</h1>
+            </div>
+            <button class="add-folder-btn" id="addFolderBtn">
+                <i class="fas fa-plus-circle"></i>
+                New Folder
+            </button>
+        </div>
+    </nav>
+
+    <!-- Storage Warning -->
+    <div class="storage-warning" id="storageWarning" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="warningText">Low storage space</span>
+    </div>
+
+    <!-- Main Content - Folders View -->
+    <main class="study-hub-main">
+        <!-- Folder Creation Modal -->
+        <div class="modal" id="folderModal">
+            <div class="modal-content">
+                <h2>Create New Study Folder</h2>
+                <div class="form-group">
+                    <label for="chapterName">Chapter Name *</label>
+                    <input type="text" id="chapterName" placeholder="e.g., Calculus Chapter 1" required>
+                </div>
+                <div class="form-group">
+                    <label for="chapterNo">Chapter Number *</label>
+                    <input type="text" id="chapterNo" placeholder="e.g., Chapter 1.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="subjectTitle">Subject/Title *</label>
+                    <input type="text" id="subjectTitle" placeholder="e.g., Mathematics" required>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn-primary" id="createFolderBtn">Create Folder</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Folders Grid -->
+        <div class="folders-container" id="foldersContainer">
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-folder-open"></i>
+                <h3>No Study Folders Yet</h3>
+                <p>Create your first folder to organize your study materials</p>
+                <button class="btn-primary" id="createFirstFolder">Create First Folder</button>
+            </div>
+        </div>
+
+        <!-- Folder Template -->
+        <template id="folderTemplate">
+            <div class="folder-card">
+                <div class="folder-header">
+                    <i class="fas fa-folder"></i>
+                    <div class="folder-info">
+                        <h3 class="folder-title">Chapter Name</h3>
+                        <p class="folder-subtitle">Chapter No • Subject</p>
+                        <p class="folder-date">Created: 01 Jan 2023</p>
+                    </div>
+                    <div class="folder-actions">
+                        <button class="icon-btn edit-folder" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-btn delete-folder" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="folder-stats">
+                    <span><i class="fas fa-video"></i> <span class="video-count">0</span> videos</span>
+                    <span><i class="fas fa-file-pdf"></i> <span class="note-count">0</span> notes</span>
+                    <span><i class="fas fa-clock"></i> <span class="study-time">0h</span> studied</span>
+                </div>
+                <div class="folder-actions-main">
+                    <button class="action-btn open-folder-btn">
+                        <i class="fas fa-folder-open"></i> Open
+                    </button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Folder Content Modal (Shows when folder is opened) -->
+        <div class="modal" id="folderContentModal">
+            <div class="modal-content folder-content-modal">
+                <div class="folder-content-header">
+                    <button class="back-btn" id="backToFoldersBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2 id="currentFolderTitle">Folder Name</h2>
+                    <button class="close-btn" id="closeFolderContentBtn">&times;</button>
+                </div>
+                
+                <div class="folder-content-nav">
+                    <button class="content-nav-btn active" data-tab="videos">
+                        <i class="fas fa-video"></i> Videos
+                    </button>
+                    <button class="content-nav-btn" data-tab="pdfs">
+                        <i class="fas fa-file-pdf"></i> PDF Notes
+                    </button>
+                    <button class="content-nav-btn" data-tab="subfolders">
+                        <i class="fas fa-folder"></i> Sub-folders
+                    </button>
+                </div>
+                
+                <div class="folder-content-area">
+                    <!-- Videos Tab -->
+                    <div class="content-tab active" id="videosTab">
+                        <div class="content-header">
+                            <h3>Videos <span id="videoCountBadge">0</span></h3>
+                            <button class="btn-primary" id="addVideoBtn">
+                                <i class="fas fa-plus"></i> Add Video
+                            </button>
+                        </div>
+                        <div class="content-list" id="videosList">
+                            <!-- Videos will be listed here -->
+                        </div>
+                    </div>
+                    
+                    <!-- PDFs Tab -->
+                    <div class="content-tab" id="pdfsTab">
+                        <div class="content-header">
+                            <h3>PDF Notes <span id="pdfCountBadge">0</span></h3>
+                            <button class="btn-primary" id="addPdfBtn">
+                                <i class="fas fa-plus"></i> Add PDF
+                            </button>
+                        </div>
+                        <div class="content-list" id="pdfsList">
+                            <!-- PDFs will be listed here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Sub-folders Tab -->
+                    <div class="content-tab" id="subfoldersTab">
+                        <div class="content-header">
+                            <h3>Sub-folders <span id="subfolderCountBadge">0</span></h3>
+                            <button class="btn-primary" id="addSubfolderBtn">
+                                <i class="fas fa-plus"></i> Create Sub-folder
+                            </button>
+                        </div>
+                        <div class="content-list" id="subfoldersList">
+                            <!-- Sub-folders will be listed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Modal -->
+        <div class="modal" id="uploadModal">
+            <div class="modal-content">
+                <h2>Upload to <span id="uploadToFolderName">Folder</span></h2>
+                
+                <div class="upload-tabs">
+                    <button class="tab-btn active" data-type="video">Video</button>
+                    <button class="tab-btn" data-type="pdf">PDF Notes</button>
+                </div>
+                
+                <!-- Video Upload -->
+                <div class="upload-content active" id="videoUpload">
+                    <h3>Upload Video</h3>
+                    <p class="upload-info">Max size: 100GB • Supported: MP4, MOV, AVI, MKV, WEBM</p>
+                    
+                    <div class="upload-area" id="videoUploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop video file here</p>
+                        <p class="upload-subtext">or click to browse</p>
+                        <input type="file" id="videoFile" accept="video/*" hidden>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="videoTitle">Video Title *</label>
+                        <input type="text" id="videoTitle" placeholder="e.g., Limits and Continuity" required>
+                    </div>
+                    
+                    <div class="file-info" id="videoFileInfo" style="display: none;">
+                        <p><i class="fas fa-file-video"></i> <span id="videoFileName">video.mp4</span></p>
+                        <p class="file-size" id="videoFileSize">0 MB</p>
+                    </div>
+                </div>
+                
+                <!-- PDF Upload -->
+                <div class="upload-content" id="pdfUpload">
+                    <h3>Upload PDF Notes</h3>
+                    <p class="upload-info">Max size: 100MB • Optional</p>
+                    
+                    <div class="upload-area" id="pdfUploadArea">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & drop PDF file here</p>
+                        <p class="upload-subtext">or click to browse</p>
+                        <input type="file" id="pdfFile" accept=".pdf" hidden>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pdfTitle">Notes Title *</label>
+                        <input type="text" id="pdfTitle" placeholder="e.g., Calculus Formulas" required>
+                    </div>
+                    
+                    <div class="file-info" id="pdfFileInfo" style="display: none;">
+                        <p><i class="fas fa-file-pdf"></i> <span id="pdfFileName">notes.pdf</span></p>
+                        <p class="file-size" id="pdfFileSize">0 MB</p>
+                    </div>
+                </div>
+                
+                <!-- Upload Progress -->
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p class="progress-text">Uploading... <span id="progressPercent">0%</span></p>
+                    <p class="progress-speed" id="progressSpeed">Speed: calculating...</p>
+                </div>
+                
+                <!-- Storage Info -->
+                <div class="storage-info">
+                    <p><i class="fas fa-hdd"></i> Available: <span id="availableStorage">0 MB</span></p>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelUpload">Cancel</button>
+                    <button class="btn-primary" id="confirmUpload">Upload File</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Player Modal -->
+        <div class="modal video-modal" id="videoModal">
+            <div class="modal-content video-content">
+                <div class="video-header">
+                    <h2 id="videoModalTitle">Video Title</h2>
+                    <button class="close-btn" id="closeVideoBtn">&times;</button>
+                </div>
+                <div class="video-player">
+                    <video id="studyVideo" controls>
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-info">
+                    <p><i class="fas fa-clock"></i> Duration: <span id="videoDuration">0:00</span></p>
+                    <p><i class="fas fa-hdd"></i> Size: <span id="videoSize">0 MB</span></p>
+                    <p><i class="fas fa-calendar"></i> Added: <span id="videoDate">Today</span></p>
+                </div>
+                <div class="video-controls">
+                    <button class="control-btn" id="downloadVideoBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="control-btn" id="deleteVideoBtn">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDF Viewer Modal -->
+        <div class="modal pdf-modal" id="pdfModal">
+            <div class="modal-content pdf-content">
+                <div class="pdf-header">
+                    <h2 id="pdfModalTitle">PDF Notes</h2>
+                    <button class="close-btn" id="closePdfBtn">&times;</button>
+                </div>
+                <div class="pdf-viewer">
+                    <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+                </div>
+                <div class="pdf-controls">
+                    <button class="control-btn" id="downloadPdfBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="control-btn" id="deletePdfBtn">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-folder Creation Modal -->
+        <div class="modal subfolder-modal" id="subfolderModal">
+            <div class="modal-content">
+                <h2>Create Sub-folder</h2>
+                <div class="form-group">
+                    <label for="subfolderName">Sub-folder Name *</label>
+                    <input type="text" id="subfolderName" placeholder="e.g., Practice Questions" required>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelSubfolderBtn">Cancel</button>
+                    <button class="btn-primary" id="createSubfolderBtn">Create</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="study-hub.html" class="nav-item active">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Study Hub</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="theme.js"></script>
+    <script src="folder-system.js"></script>
+    <script src="study-hub.js"></script>
+</body>
+</html>
